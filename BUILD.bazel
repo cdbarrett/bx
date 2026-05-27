@@ -1,0 +1,35 @@
+"""
+Main build file for the project.
+"""
+
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
+package(default_visibility = ["//visibility:public"])
+
+config_setting(
+    name = "is_dbg",
+    values = {"compilation_mode": "dbg"},
+)
+
+cc_library(
+    name = "bx",
+    srcs = glob(
+        ["src/*.cpp"],
+        exclude = ["src/amalgamated.cpp"],
+    ),
+    hdrs = glob([
+        "include/bx/*.h",
+        "include/bx/inline/*.inl",
+    ]) + select({
+        "@platforms//os:linux": glob(["include/compat/linux/*.h"]),
+        "//conditions:default": [],
+    }),
+    defines = select({
+        ":is_dbg": ["BX_CONFIG_DEBUG=1"],
+        "//conditions:default": ["BX_CONFIG_DEBUG=0"],
+    }),
+    strip_include_prefix = "include",
+    deps = [
+        "//3rdparty:ini",
+    ],
+)

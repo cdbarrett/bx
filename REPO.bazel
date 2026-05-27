@@ -1,0 +1,8 @@
+"""
+Repository-level Bazel configuration.
+"""
+
+ignore_directories([
+    ".github",
+    "scripts",
+])

@@ -1,0 +1,39 @@
+# set the c++ standard to c++20
+build --cxxopt=-std=c++20
+
+# disable RTTI and exceptions for better performance
+build --cxxopt=-fno-rtti
+build --cxxopt=-fno-exceptions
+
+# target 64-bit architecture
+build --copt=-m64
+
+# enable sse4.2, avx, and fast math optimizations
+build --copt=-msse4.2
+build --copt=-mavx
+build --copt=-ffast-math
+
+# enable warnings
+build --copt=-Wall
+build --copt=-Wextra
+build --copt=-Wshadow
+build --copt=-Wunused-value
+build --copt=-Wundef
+
+# disable specific warnings
+build --copt=-Wno-nan-infinity-disabled
+build --copt=-Wno-tautological-constant-compare
+
+# define macros for C++ standard library features
+build --copt=-D__STDC_LIMIT_MACROS
+build --copt=-D__STDC_FORMAT_MACROS
+build --copt=-D__STDC_CONSTANT_MACROS
+
+# enable link-time optimization
+build --linkopt=-Wl,--gc-sections
+build --linkopt=-Wl,--as-needed
+
+# link against the real-time library, dynamic linking library, and pthread library
+build --linkopt=-lrt
+build --linkopt=-ldl
+build --linkopt=-lpthread

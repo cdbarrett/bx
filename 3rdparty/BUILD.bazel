@@ -1,0 +1,20 @@
+"""
+Third-party dependencies for the project.
+"""
+
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
+package(default_visibility = ["//visibility:public"])
+
+cc_library(
+    name = "ini",
+    hdrs = ["ini/ini.h"],
+    strip_include_prefix = "/3rdparty",
+)
+
+cc_library(
+    name = "catch",
+    srcs = ["catch/catch_amalgamated.cpp"],
+    hdrs = ["catch/catch_amalgamated.hpp"],
+    strip_include_prefix = "/3rdparty",
+)

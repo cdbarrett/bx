@@ -1,0 +1,41 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+load("//bazel:copts.bzl", "BX_COPTS")
+
+config_setting(
+    name = "dbg",
+    values = {"compilation_mode": "dbg"},
+)
+
+cc_library(
+    name = "bx",
+    srcs = glob(
+        ["src/*.cpp"],
+        exclude = [
+            "src/amalgamated.cpp",
+            "src/crtnone.cpp",
+        ],
+    ),
+    hdrs = glob([
+        "include/bx/*.h",
+        "include/bx/inline/*.inl",
+    ]) + select({
+        "@platforms//os:linux": glob(["include/compat/linux/*.h"]),
+        "//conditions:default": [],
+    }),
+    copts = BX_COPTS,
+    defines = select({
+        ":dbg": ["BX_CONFIG_DEBUG=1"],
+        "//conditions:default": ["BX_CONFIG_DEBUG=0"],
+    }),
+    linkopts = [
+        "-lpthread",
+        "-ldl",
+        "-lrt",
+    ],
+    strip_include_prefix = "include",
+    target_compatible_with = ["@platforms//os:linux"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//3rdparty/ini",
+    ],
+)

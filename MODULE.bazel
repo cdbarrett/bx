@@ -1,0 +1,12 @@
+"""
+bx - Base library, fork of https://github.com/bkaradzic/bx.
+"""
+
+module(
+    name = "bx",
+    version = "1.0.0",
+    bazel_compatibility = [">=9.0.0"],
+)
+
+bazel_dep(name = "platforms", version = "1.1.0")
+bazel_dep(name = "rules_cc", version = "0.2.18")

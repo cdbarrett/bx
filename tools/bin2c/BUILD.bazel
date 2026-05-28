@@ -1,0 +1,11 @@
+load("@rules_cc//cc:defs.bzl", "cc_binary")
+load("//bazel:copts.bzl", "BX_COPTS")
+
+cc_binary(
+    name = "bin2c",
+    srcs = ["bin2c.cpp"],
+    copts = BX_COPTS,
+    target_compatible_with = ["@platforms//os:linux"],
+    visibility = ["//visibility:public"],
+    deps = ["//:bx"],
+)

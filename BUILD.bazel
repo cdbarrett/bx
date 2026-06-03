@@ -19,6 +19,25 @@ cc_library(
 )
 
 cc_library(
+    name = "tinystl",
+    hdrs = [
+        "include/tinystl/allocator.h",
+        "include/tinystl/buffer.h",
+        "include/tinystl/hash.h",
+        "include/tinystl/hash_base.h",
+        "include/tinystl/new.h",
+        "include/tinystl/stddef.h",
+        "include/tinystl/string.h",
+        "include/tinystl/string_view.h",
+        "include/tinystl/traits.h",
+        "include/tinystl/unordered_map.h",
+        "include/tinystl/unordered_set.h",
+        "include/tinystl/vector.h",
+    ],
+    strip_include_prefix = "include",
+)
+
+cc_library(
     name = "bx",
     srcs = [
         "src/allocator.cpp",
@@ -84,7 +103,7 @@ cc_library(
     ],
     copts = [
         "-msse4.2",
-        "-mavx",
+        "-mavx2",
         "-pthread",
     ],
     cxxopts = ["-std=c++20"],
@@ -138,6 +157,7 @@ cc_library(
     visibility = ["//visibility:public"],
     deps = [
         ":bx_compat_headers",
+        ":tinystl",
         "//3rdparty/ini",
     ],
 )
